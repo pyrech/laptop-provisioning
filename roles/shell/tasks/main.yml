@@ -1,0 +1,4 @@
+---
+
+- include: oh-my-zsh.yml
+- include: terminator.yml

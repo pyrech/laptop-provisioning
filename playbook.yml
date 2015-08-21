@@ -1,0 +1,13 @@
+---
+
+- hosts: localhost
+  connection: local
+  vars:
+    whoami: "{{ lookup('env', 'USER') }}"
+    user_home: "{{ lookup('env', 'HOME') }}"
+    git_user_name: "Loïck Piera"
+    git_user_email: "pyrech@gmail.com"
+  roles:
+    - basic
+    - shell
+    - php

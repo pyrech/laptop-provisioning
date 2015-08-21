@@ -1,0 +1,4 @@
+---
+
+zsh_plugins: common-aliases composer debian git symfony2
+zsh_theme: ys

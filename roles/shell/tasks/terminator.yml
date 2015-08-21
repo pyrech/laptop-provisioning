@@ -1,0 +1,25 @@
+---
+
+- name: install terminator
+  sudo: yes
+  apt: name=terminator state=present
+
+#
+#- name: get applications in launcher
+#  shell: gsettings get com.canonical.Unity.Launcher favorites
+#  register: zsh_cloned
+#  failed_when: false
+#  changed_when: false
+#
+#- name: test whether or not terminator was added to launcher
+#  shell: if [[ $(gsettings get com.canonical.Unity.Launcher favorites) == *"application://terminator.desktop"* ]]; then true; else false; fi
+#  register: zsh_cloned
+#  failed_when: false
+#  changed_when: false
+#
+#- name: add terminator to the launcher
+#  shell: gsettings set com.canonical.Unity.Launcher favorites rtesdftredfgfdfvcgfdcv
+#
+#  register: zshrc_exists
+#  when: zshrc_exists|failed
+#

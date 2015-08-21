@@ -1,0 +1,19 @@
+---
+
+- name: test if composer is installed globally
+  shell: "if [ $(which composer) ]; then true; else false; fi"
+  register: composer_installed
+  failed_when: false
+  changed_when: false
+
+- name: install composer globally
+  shell: curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+  when: composer_installed|failed
+
+- name: install globally some usefull php packages
+  composer: command="require {{item}}" no_dev=no optimize_autoloader=no working_dir="{{user_home}}/.composer"
+  with_items:
+    - phpunit/phpunit
+    - symfony/var-dumper
+    - psy/psysh
+    - pyrech/composer-notifier
