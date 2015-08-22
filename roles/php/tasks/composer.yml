@@ -1,17 +1,32 @@
 ---
 
-- name: test if composer is installed globally
-  shell: "if [ $(which composer) ]; then true; else false; fi"
-  register: composer_installed
-  failed_when: false
-  changed_when: false
+- name: install composer if not already present
+  sudo: yes
+  shell: creates=/usr/local/bin/composer curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-- name: install composer globally
-  shell: curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
-  when: composer_installed|failed
+- name: set composer permissions
+  sudo: yes
+  file: path=/usr/local/bin/composer mode=0755
+
+- name: update composer
+  sudo: yes
+  command: composer selfupdate
+  register: composer_updated
+  changed_when: "'Updating' in composer_updated.stderr"
+
+- name: set permissions to .composer dir
+  sudo: yes
+  file: path={{user_home}}/.composer
+        mode=0755
+        owner={{whoami}}
+        group={{whoami}}
+        recurse=yes
 
 - name: install globally some usefull php packages
-  composer: command="require {{item}}" no_dev=no optimize_autoloader=no working_dir="{{user_home}}/.composer"
+  composer: command="require {{item}}"
+            working_dir="{{user_home}}/.composer"
+            no_dev=no
+            optimize_autoloader=no
   with_items:
     - phpunit/phpunit
     - symfony/var-dumper

@@ -7,39 +7,26 @@
     - git
     - zsh
 
-- name: test if oh-my-zsh has been cloned before
-  shell: if [ -f {{user_home}}/.oh-my-zsh/oh-my-zsh.sh ]; then true; else false; fi
-  register: zsh_cloned
-  failed_when: false
-  changed_when: false
-
-# `git clone --depth=1` to improve speed
+# depth=1 to improve speed
 - name: git clone oh-my-zsh repo
   git: repo=https://github.com/robbyrussell/oh-my-zsh.git
        dest={{user_home}}/.oh-my-zsh
        depth=1
-  when: zsh_cloned|failed
 
-- name: test if .zshrc exists
-  shell: if [ -f {{user_home}}/.zshrc ]; then true; else false; fi
-  register: zshrc_exists
-  failed_when: false
-  changed_when: false
-
-- name: backup original zshrc
-  copy: src={{user_home}}/.zshrc dest={{user_home}}/.zshrc.orig
-  when: zshrc_exists|success
+- name: setting permissions to .oh-my-zsh
+  sudo: yes
+  file: path={{user_home}}/.oh-my-zsh
+        owner={{ whoami }}
+        group={{ whoami }}
+        recurse=yes
 
 - name: deploy .zshrc
-  template: src=zshrc.sh dest={{user_home}}/.zshrc owner={{whoami}}
-
-- name: test if zsh has been set as default shell
-  shell: "if [ $(getent passwd {{whoami}} | cut -d: -f7) = $(which zsh) ]; then true; else false; fi"
-  register: zsh_default_shell
-  failed_when: false
-  changed_when: false
+  template: src=zshrc.sh
+            dest={{user_home}}/.zshrc
+            owner={{whoami}}
+            backup=yes
 
 - name: set zsh as default shell
   sudo: yes
-  shell: chsh -s $(which zsh) {{whoami}}
-  when: zsh_default_shell|failed
+  user: name={{whoami}}
+        shell=/usr/bin/zsh

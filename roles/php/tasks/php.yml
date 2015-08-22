@@ -5,10 +5,12 @@
 - name: add ppa repository for PHP 5.6
   sudo: yes
   apt_repository: repo='ppa:ondrej/php5-5.6' state=present
+  register: ppa_added
 
 - name: update package
   sudo: yes
   apt: update_cache=true
+  when: ppa_added|changed
 
 - name: install php
   sudo: yes
@@ -19,8 +21,8 @@
 - name: setup custom php conf
   template: src=custom_php_conf.ini dest=/etc/php5/custom_php_conf.ini owner=root
 
-- name: Add custom php config to apache
+- name: add custom php config to apache
   file: src=/etc/php5/custom_php_conf.ini dest=/etc/php5/apache2/conf.d/20-custom_php_conf.ini state=link
 
-- name: Add custom php config to cli
+- name: add custom php config to cli
   file: src=/etc/php5/custom_php_conf.ini dest=/etc/php5/cli/conf.d/20-custom_php_conf.ini state=link
