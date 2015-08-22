@@ -1,0 +1,26 @@
+[user]
+    name = {{git_user_name}}
+    email = {{git_user_email}}
+
+[push]
+    default = current
+
+[fetch]
+    prune = true
+
+[core]
+    excludesfile = {{user_home}}/.gitignore_global
+
+[rebase]
+    autosquash = true
+
+[alias]
+    st = status
+    df = diff
+    co = checkout
+    ci = commit
+    br = branch
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
+[branch]
+    autosetuprebase = always

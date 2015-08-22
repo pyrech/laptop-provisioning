@@ -26,7 +26,6 @@ ansible-playbook -i hosts -b --ask-become-pass playbook.yml
 - install phpstorm
 - install browsers
 - configure ubuntu
-- configure git (user, global gitignore, etc)
 - configure terminator
 - configure phpstorm
 - configure browsers

@@ -1,0 +1,19 @@
+---
+
+- name: install git
+  sudo: yes
+  apt: name={{item}} state=present
+  with_items:
+    - git
+
+- name: set git global config
+  template: src=.gitconfig
+            dest={{user_home}}/.gitconfig
+            owner={{whoami}}
+            backup=yes
+
+- name: set git global gitignore
+  template: src=.gitignore_global
+            dest={{user_home}}/.gitignore_global
+            owner={{whoami}}
+            backup=yes
