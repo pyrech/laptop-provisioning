@@ -2,6 +2,7 @@
 
 - hosts: localhost
   connection: local
+  sudo: no
   vars:
     whoami: "{{ lookup('env', 'USER') }}"
     user_home: "{{ lookup('env', 'HOME') }}"
@@ -9,5 +10,5 @@
     git_user_email: "pyrech@gmail.com"
   roles:
     - basic
-    - shell
+    - dev
     - php

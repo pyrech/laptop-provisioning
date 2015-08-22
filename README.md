@@ -21,6 +21,17 @@ cd laptop-provisioning
 ansible-playbook -i hosts -b --ask-become-pass playbook.yml
 ```
 
+## Todo
+
+- install phpstorm
+- install browsers
+- configure ubuntu
+- configure git (user, global gitignore, etc)
+- configure terminator
+- configure phpstorm
+- configure browsers
+- what else?
+
 ## Credits
 
 Heavily inspired by
