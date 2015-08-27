@@ -4,7 +4,7 @@
 
 This project is *MY* first experience with Ansible to provision *MY* laptop
 (Ubuntu based for now).
-If you find it usefull anyway or if you find something that could be improved
+If you find it useful anyway or if you find something that could be improved
 you are more than welcome to leave a comment (in a
 [new issue](https://github.com/pyrech/laptop-provisioning/issues/new) or
 [on twitter](https://twitter.com/pyrech)) ;-)
@@ -23,7 +23,6 @@ ansible-playbook -i hosts -b --ask-become-pass playbook.yml
 
 ## Todo
 
-- install phpstorm
 - install browsers
 - configure ubuntu
 - configure terminator

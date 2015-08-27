@@ -1,0 +1,41 @@
+---
+
+# Inspired by https://github.com/kosssi/ansible-role-phpstorm
+
+- name: test if folder exist
+  stat: path={{ phpstorm_dir }}
+  register: phpstorm_exist
+
+- name: download phpstorm archive
+  get_url: url=http://download.jetbrains.com/webide/PhpStorm-{{ phpstorm_version }}.tar.gz
+           dest=/tmp/phpstorm.tar.gz
+  when: phpstorm_exist.stat.exists == false
+
+- name: decompress phpstorm archive
+  unarchive: src=/tmp/phpstorm.tar.gz
+             dest=/tmp
+             copy=no
+  when: phpstorm_exist.stat.exists == false
+
+- name: move phpstorm folder
+  sudo: yes
+  shell: mv /tmp/PhpStorm-* {{ phpstorm_dir }}
+         creates="{{ phpstorm_dir }}"
+
+- name: create symlink
+  sudo: yes
+  file: src={{ phpstorm_dir }}/bin/phpstorm.sh
+        dest={{ phpstorm_bin }}
+        state=link
+
+- name: remove phpstorm archive
+  file: path=/tmp/phpstorm.tar.gz
+        state=absent
+
+- name: ensure phpstorm is executable
+  sudo: yes
+  file: path={{ phpstorm_bin }}
+        mode=0755
+        owner={{whoami}}
+        group={{whoami}}
+        follow=yes

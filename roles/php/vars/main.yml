@@ -1,0 +1,5 @@
+---
+
+phpstorm_version: 9.0
+phpstorm_bin: /usr/local/bin/phpstorm
+phpstorm_dir: "/opt/phpstorm-{{ phpstorm_version }}"

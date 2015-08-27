@@ -10,5 +10,6 @@
     git_user_email: "pyrech@gmail.com"
   roles:
     - basic
+    - java
     - dev
     - php

@@ -1,0 +1,23 @@
+---
+
+# Inspired from https://github.com/William-Yeh/ansible-oracle-java
+
+- name: import WebUpd8 PGP key
+  sudo: yes
+  apt_key: keyserver=keyserver.ubuntu.com id=0xEEA14886 state=present
+
+- name: add the WebUpd8 Oracle Java PPA repository
+  sudo: yes
+  apt_repository: repo=ppa:webupd8team/java state=present
+
+- name: automatically accept the Oracle license
+  sudo: yes
+  debconf: name="oracle-java{{ java_version }}-installer" question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+
+- name: install JDK
+  sudo: yes
+  apt: pkg="oracle-java{{ java_version }}-installer" state=present force=yes
+
+- name: set this as default Java; also environment variables
+  sudo: yes
+  apt: pkg="oracle-java{{ java_version }}-set-default" state=present force=yes
