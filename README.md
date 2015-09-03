@@ -23,7 +23,6 @@ ansible-playbook -i hosts -b --ask-become-pass playbook.yml
 
 ## Todo
 
-- install browsers
 - configure ubuntu
 - configure terminator
 - configure phpstorm

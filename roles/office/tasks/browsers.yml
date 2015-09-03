@@ -1,0 +1,13 @@
+---
+
+- name: install firefox
+  sudo: yes
+  apt: name={{item}} state=present
+  with_items:
+    - firefox
+
+- name: install chromium
+  sudo: yes
+  apt: name={{item}} state=present
+  with_items:
+    - chromium-browser
